@@ -17,16 +17,15 @@ Runtime requirements:
   classpath-0.93-1
   jamvm-1.4.5-1
 (perl-qdbm)
-  perl-5.8.8-4
+  perl-5.10.0-3
 (ruby-qdbm)
   ruby-1.8.6-1
 
 Build requirements:
 (besides corresponding -devel packages)
-  cygwin-1.5.24-2
   autoconf2.5-2.61-1
   binutils-20060817-1
-  cygport-0.3.7-1
+  cygport-0.3.9-1
   fastjar-0.94-1
   gawk-3.1.5-4
   gcc-core-3.4.4-3
@@ -224,29 +223,21 @@ Files included in the binary packages:
   /usr/share/doc/qdbm-1.8.77/java/jspex.html
 
 (perl-qdbm)
-  /etc/postinstall/qdbm.sh
-  /usr/lib/perl5/vendor_perl/5.8/cygwin/Curia.pm
-  /usr/lib/perl5/vendor_perl/5.8/cygwin/Depot.pm
-  /usr/lib/perl5/vendor_perl/5.8/cygwin/Villa.pm
-  /usr/lib/perl5/vendor_perl/5.8/cygwin/auto/Curia/.packlist
-  /usr/lib/perl5/vendor_perl/5.8/cygwin/auto/Curia/Curia.bs
-  /usr/lib/perl5/vendor_perl/5.8/cygwin/auto/Curia/Curia.dll
-  /usr/lib/perl5/vendor_perl/5.8/cygwin/auto/Curia/libCuria.dll.a
-  /usr/lib/perl5/vendor_perl/5.8/cygwin/auto/Depot/.packlist
-  /usr/lib/perl5/vendor_perl/5.8/cygwin/auto/Depot/Depot.bs
-  /usr/lib/perl5/vendor_perl/5.8/cygwin/auto/Depot/Depot.dll
-  /usr/lib/perl5/vendor_perl/5.8/cygwin/auto/Depot/libDepot.dll.a
-  /usr/lib/perl5/vendor_perl/5.8/cygwin/auto/Villa/.packlist
-  /usr/lib/perl5/vendor_perl/5.8/cygwin/auto/Villa/Villa.bs
-  /usr/lib/perl5/vendor_perl/5.8/cygwin/auto/Villa/Villa.dll
-  /usr/lib/perl5/vendor_perl/5.8/cygwin/auto/Villa/libVilla.dll.a
+  /usr/lib/perl5/vendor_perl/5.10/i686-cygwin/Curia.pm
+  /usr/lib/perl5/vendor_perl/5.10/i686-cygwin/Depot.pm
+  /usr/lib/perl5/vendor_perl/5.10/i686-cygwin/Villa.pm
+  /usr/lib/perl5/vendor_perl/5.10/i686-cygwin/auto/Curia/.packlist
+  /usr/lib/perl5/vendor_perl/5.10/i686-cygwin/auto/Curia/Curia.dll
+  /usr/lib/perl5/vendor_perl/5.10/i686-cygwin/auto/Depot/.packlist
+  /usr/lib/perl5/vendor_perl/5.10/i686-cygwin/auto/Depot/Depot.dll
+  /usr/lib/perl5/vendor_perl/5.10/i686-cygwin/auto/Villa/.packlist
+  /usr/lib/perl5/vendor_perl/5.10/i686-cygwin/auto/Villa/Villa.dll
   /usr/share/doc/qdbm-1.8.77/perl/plapidoc/Curia.pm.html
   /usr/share/doc/qdbm-1.8.77/perl/plapidoc/Depot.pm.html
   /usr/share/doc/qdbm-1.8.77/perl/plapidoc/Villa.pm.html
   /usr/share/doc/qdbm-1.8.77/perl/plapidoc/index.html
   /usr/share/doc/qdbm-1.8.77/perl/plspex-ja.html
   /usr/share/doc/qdbm-1.8.77/perl/plspex.html
-  /usr/share/perl/cygwin-pods/5.8/qdbm.pod
 
 (ruby-qdbm)
   /usr/lib/ruby/site_ruby/1.8/curia.rb
@@ -265,6 +256,9 @@ Files included in the binary packages:
 ------------------
 
 Port Notes:
+
+----- version 1.8.77-2 -----
+Rebuilt perl bindings for perl-5.10.
 
 ----- version 1.8.77-1 -----
 Initial release for Cygwin.

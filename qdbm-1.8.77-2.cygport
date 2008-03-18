@@ -1,0 +1,110 @@
+inherit perl ruby
+
+DESCRIPTION="Quick DBM library"
+HOMEPAGE="http://qdbm.sourceforge.net/"
+SRC_URI="http://qdbm.sourceforge.net/${P}.tar.gz"
+
+capi=14
+xapi=3
+
+PKG_NAMES="${PN} lib${PN}${capi} libx${PN}${xapi} lib${PN}-devel java-${PN} perl-${PN} ruby-${PN}"
+PKG_HINTS="bin libc libx devel java perl ruby"
+PKG_CONTENTS[0]="--exclude=java --exclude=perl --exclude=plus --exclude=ruby
+                 usr/bin/*.exe usr/sbin/ usr/share/doc/ usr/share/man/man1/"
+PKG_CONTENTS[1]="usr/bin/cyg${PN}-${capi}.dll"
+PKG_CONTENTS[2]="usr/bin/cygx${PN}-${xapi}.dll"
+PKG_CONTENTS[3]="usr/include/ usr/lib/lib* usr/lib/pkgconfig/
+                 usr/share/doc/${P}/plus/ usr/share/man/man3/"
+PKG_CONTENTS[4]="usr/bin/cygj${PN}.dll usr/share/doc/${P}/java/ usr/share/java/"
+PKG_CONTENTS[5]="${PERL_VENDORLIB#/} usr/share/doc/${P}/perl/"
+PKG_CONTENTS[6]="${RUBY_SITELIB#/} usr/share/doc/${P}/ruby/"
+
+src_compile() {
+	lndirs
+	cd ${B}
+	CYGCONF_SOURCE=. cygconf \
+		--includedir=/usr/include/qdbm \
+		--enable-stable \
+		--enable-bzip \
+		--enable-iconv \
+		--enable-lzo \
+		--enable-pthread \
+		--enable-zlib
+	cygmake -f LTmakefile
+
+	cd ${B}/plus
+	autoconf -f
+	CYGCONF_SOURCE=. cygconf --includedir=/usr/include/qdbm
+	cygmake -f LTmakefile
+
+	cd ${B}/cgi
+	autoconf -f
+	CYGCONF_SOURCE=. cygconf
+	cygmake
+
+	cd ${B}/java
+	CYGCONF_SOURCE=. CPPFLAGS+=" -I/usr/include/jamvm" cygconf
+	cygmake win JAVAC=jikes JAR=fastjar
+
+	cd ${B}/perl
+	autoconf -f
+	CYGCONF_SOURCE=. cygconf
+	cygmake -j1
+
+	cd ${B}/ruby
+	CYGCONF_SOURCE=. cygconf
+	cygmake -j1
+}
+
+src_test() {
+	export PATH="${B}/.libs:${B}/java:$PATH"
+
+	cd ${B}
+	cygmake -j1 -f LTmakefile check
+
+	cd ${B}/plus
+	cygmake -j1 -f LTmakefile check
+
+	cd ${B}/java
+	cygmake -j1 check JAVARUN=jamvm
+
+	cd ${B}/perl
+	cygmake -j1 check
+
+	cd ${B}/ruby
+	cygmake -j1 check
+}
+
+src_install() {
+	cd ${B}
+	cyginstall -f LTmakefile
+
+	cd ${B}/plus
+	cyginstall -f LTmakefile
+
+	cd ${B}/cgi
+	cyginstall
+
+	cd ${B}/java
+	cygmake -j1 install-win DESTDIR=${D}
+	rm -f ${D}/usr/lib/libjqdbm.dll.a
+	dodir /usr/share/java
+	mv ${D}/usr/lib/qdbm.jar ${D}/usr/share/java
+
+	cd ${B}/perl
+	cyginstall -j1
+	perl_postinst
+
+	cd ${B}/ruby
+	cyginstall -j1
+
+	rm -fr ${D}/usr/{bin,share/man/man1}/*test*
+
+	rm -fr ${D}/usr/share/qdbm{,-plus}
+	cd ${S}
+	for f in $(find . -name '*.html' -o -name '*.conf')
+	do
+		insinto /usr/share/doc/${P}/${f%/*}
+		doins $f
+	done
+}
