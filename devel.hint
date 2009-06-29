@@ -1,5 +1,5 @@
 category: Database
-requires: cygwin libbz2-devel libiconv lzo2 zlib
+requires: libbz2-devel libiconv lzo2 zlib
 external-source: qdbm
 sdesc: "Quick Database Manager (development)"
 ldesc: "QDBM is a library of routines for managing a database. The 
